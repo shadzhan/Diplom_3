@@ -100,14 +100,13 @@ class TestMainPage:
 
         with allure.step("Получить номер созданного заказа"):
             order_number = main_page.get_order_number()
-            allure.attach(f"Номер заказа: {order_number}", "Информация о заказе")
             main_page.close_order_modal()
 
         with allure.step("Перейти в ленту заказов"):
             order_feed_page.go_to_order_feed()
 
         with allure.step("Проверить появление заказа в разделе 'В работе'"):
-            order_feed_page.get_in_progress_orders(order_number)
+            order_feed_page.get_in_progress_orders()
 
             in_progress_orders = order_feed_page.get_in_progress_orders()
 
