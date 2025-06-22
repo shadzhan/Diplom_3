@@ -45,11 +45,10 @@ class MainPage(BasePage):
 
     @allure.step("Добавить ингредиент в конструктор")
     def add_ingredient_into_basket(self):
-        self.wait_for_element(MainPageLocators.INGREDIENTS_LIST)
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element(MainPageLocators.INGREDIENT_ITEM_FIRST)
-        time.sleep(3)
+        time.sleep(6)
         self.drag_and_drop_element(MainPageLocators.INGREDIENT_ITEM_FIRST, MainPageLocators.CONSTRUCTOR_BASKET)
 
     @allure.step("Оформить заказ (если пользователь залогинен)")
