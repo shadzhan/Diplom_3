@@ -6,8 +6,8 @@ from selenium.webdriver.chrome.service import Service
 from curl  import Urls
 from data import Credentials
 from pages.login_page import LoginPage
-
-
+from locators.login_page_locators import LoginPageLocators
+from pages.order_feed_page import OrderFeedPage
 
 @pytest.fixture(params=["chrome", "firefox"])
 def driver(request):
@@ -23,14 +23,19 @@ def driver(request):
     driver.quit()
 
 
-    return driver
-
 @pytest.fixture()
 def login(driver):
-    """
-    Фикстура для авторизации пользователя.
-    """
-    login_page = LoginPage(driver)
-    login_page.login(Credentials.email,Credentials.password)
+    """Фикстура для авторизации пользователя."""
 
+    driver.get(Urls.LOGIN_PAGE)
+
+    login_page = LoginPage(driver)
+    login_page.wait_for_element(LoginPageLocators.LOGIN_HEADER, timeout=15)
+    login_page.login(Credentials.email, Credentials.password)
+
+    driver.get(Urls.MAIN_SITE)
     return driver
+
+@pytest.fixture
+def order_feed_page(driver):
+    return OrderFeedPage(driver)
