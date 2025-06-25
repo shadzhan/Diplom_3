@@ -20,6 +20,9 @@ class TestMainPage:
         with allure.step("Закрыть модальное окно крестиком"):
             main_page.close_popup()
 
+        assert main_page.is_ingredient_modal_closed(), \
+            "Модальное окно с деталями ингредиента не закрылось"
+
 
     @allure.title("Проверка добавления ингредиента в конструктор")
     def test_put_ingredient_to_counter(self, driver):
@@ -67,3 +70,6 @@ class TestMainPage:
 
         with allure.step("Закрыть модальное окно заказа"):
             main_page.close_order_modal()
+
+        assert main_page.is_order_modal_closed(), \
+            "Модальное окно оформления заказа не закрылось"

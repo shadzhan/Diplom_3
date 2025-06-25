@@ -45,7 +45,7 @@ class BasePage:
 
     @allure.step('Подождать пока элемент не станет невидимым')
     def wait_for_element_hide(self, locator):
-        WebDriverWait(self.driver, timeout=10).until(EC.invisibility_of_element_located(locator))
+        WebDriverWait(self.driver, timeout=30).until(EC.invisibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
     @allure.step('Подождать, пока элемент полностью исчезнет')
@@ -70,7 +70,6 @@ class BasePage:
     @allure.step("Открыть URL")
     def open_url(self, url):
         self.driver.get(url)
-        return self
 
     @allure.step("Найти все элементы по локатору")
     def find_elements(self, locator, timeout=10):
@@ -82,4 +81,11 @@ class BasePage:
         return WebDriverWait(self.driver, timeout).until(
             EC.visibility_of_element_located(locator),
             message=f"Элемент {locator} не найден за {timeout} секунд"
+        )
+
+    @allure.step("Подождать выполнения условия")
+    def wait_for_condition(self, condition, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            lambda driver: condition(),
+            message="Condition not met within timeout"
         )

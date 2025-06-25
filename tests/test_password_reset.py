@@ -1,12 +1,11 @@
 import allure
 import pytest
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
 from pages.forgot_password_page import ForgotPasswordPage
 from pages.password_reset_page import PasswordResetPage
 from helper import generate_random_email
+
 
 
 @allure.feature("Восстановление пароля")
@@ -29,6 +28,8 @@ class TestPasswordRecovery:
             recovery_page = ForgotPasswordPage(driver)
             recovery_page.should_be_forgot_password_page()
 
+            assert "forgot-password" in driver.current_url.lower(), \
+                f"Ожидался переход на страницу восстановления пароля. Текущий URL: {driver.current_url}"
 
     @allure.title("Восстановление пароля по email")
     def test_password_reset_with_email(self, driver):
@@ -51,6 +52,8 @@ class TestPasswordRecovery:
             password_reset_page = PasswordResetPage(driver)
             password_reset_page.should_be_password_reset_page()
 
+            assert "reset-password" in driver.current_url.lower(), \
+                f"Ожидался переход на страницу сброса пароля. Текущий URL: {driver.current_url}"
 
     @allure.title("Проверка функционала показа/скрытия пароля")
     def test_password_visibility_toggle(self, driver):

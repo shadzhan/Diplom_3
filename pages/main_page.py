@@ -33,13 +33,11 @@ class MainPage(BasePage):
         self.click_on_element(MainPageLocators.INGREDIENT_ITEM)
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
-        time.sleep(3)
         self.wait_for_element(MainPageLocators.ORDER_DETAILS_POPUP)
 
     @allure.step("Закрыть всплывающее окно с деталями")
     def close_popup(self):
         self.click_on_element(MainPageLocators.CLOSE_POPUP_BUTTON)
-        time.sleep(3)
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
 
@@ -48,7 +46,6 @@ class MainPage(BasePage):
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element(MainPageLocators.INGREDIENT_ITEM_FIRST)
-        time.sleep(6)
         self.drag_and_drop_element(MainPageLocators.INGREDIENT_ITEM_FIRST, MainPageLocators.CONSTRUCTOR_BASKET)
 
     @allure.step("Оформить заказ (если пользователь залогинен)")
@@ -67,7 +64,7 @@ class MainPage(BasePage):
     @allure.step("Ожидание авторизованного состояния")
     def wait_for_authorized_state(self):
         self.wait_for_element(MainPageLocators.ORDER_BUTTON)
-        return self
+
 
 
     @allure.step("Получить значение счетчика ингредиента")
@@ -84,7 +81,7 @@ class MainPage(BasePage):
         self.wait_for_element(MainPageLocators.INGREDIENT_ITEM)
         self.drag_and_drop_element(MainPageLocators.INGREDIENT_ITEM, MainPageLocators.CONSTRUCTOR_BASKET)
 
-        self.wait_for_element(MainPageLocators.INGREDIENT_COUNTER_BUTTON, timeout=5)
+        self.wait_for_element(MainPageLocators.INGREDIENT_COUNTER_BUTTON)
 
     @allure.step("Проверить видимость модального окна заказа")
     def is_order_modal_visible(self):
@@ -100,4 +97,12 @@ class MainPage(BasePage):
     @allure.step("Закрыть модальное окно заказа")
     def close_order_modal(self):
         self.click_on_element(MainPageLocators.MODAL_CLOSE_BUTTON)
-        return self
+
+    @allure.step("Проверка закрытия модального окна заказа")
+    def is_order_modal_closed(self):
+        return self.wait_for_element_hide(MainPageLocators.ORDER_MODAL)
+
+    @allure.step("Проверить закрытия модального окна с деталями ингредиента")
+    def is_ingredient_modal_closed(self):
+        return self.wait_for_element_hide(MainPageLocators.ORDER_DETAILS_POPUP)
+

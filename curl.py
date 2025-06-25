@@ -10,11 +10,11 @@ class Urls:
     LOGOUT_ENDPOINT = f'{API_BASE}/auth/logout'
 
     # Страницы UI
-    HOME_PAGE = 'https://stellarburgers.nomoreparties.site'
-    LOGIN_PAGE = 'https://stellarburgers.nomoreparties.site/login'
+    HOME_PAGE = f'{MAIN_SITE}/'
+    LOGIN_PAGE = f'{MAIN_SITE}/login'
     RESET_PASSWORD_PAGE = '/reset-password'
-    PROFILE_PAGE = 'https://stellarburgers.nomoreparties.site/account/profile'
-    HISTORY_OF_ORDERS_PAGE = 'https://stellarburgers.nomoreparties.site/account/order-history'
-    ORDER_LIST_PAGE = 'https://stellarburgers.nomoreparties.site/feed'
-    INGREDIENT_PAGE = 'https://stellarburgers.nomoreparties.site/ingredient'
+    PROFILE_PAGE = f'{MAIN_SITE}/account/profile'
+    HISTORY_OF_ORDERS_PAGE = f'{MAIN_SITE}/account/order-history'
+    ORDER_LIST_PAGE = f'{MAIN_SITE}/feed'
+    INGREDIENT_PAGE = f'{MAIN_SITE}/ingredient'
     FORGOT_PASSWORD_PAGE = '/forgot-password'

@@ -13,13 +13,11 @@ class PasswordResetPage(BasePage):
         self.wait_for_url_contains(f"{Urls.MAIN_SITE}{Urls.RESET_PASSWORD_PAGE}")
         self.wait_for_element(PasswordResetLocators.RESET_FORM)
         self.wait_for_element(PasswordResetLocators.PASSWORD_INPUT)
-        return self
 
     @allure.step("Проверить подсветку поля пароля")
     def is_password_field_highlighted(self):
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
         self.click_on_element(PasswordResetLocators.PASSWORD_INPUT)
-        return self
 
 

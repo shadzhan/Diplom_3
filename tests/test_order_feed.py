@@ -2,6 +2,8 @@ import allure
 import pytest
 from pages.order_feed_page import OrderFeedPage
 from pages.main_page import MainPage
+from pages.login_page import LoginPage
+from data import TestData
 
 
 @allure.feature("Лента заказов")
@@ -18,6 +20,8 @@ class TestMainPage:
         with allure.step("3. Закрыть модальное окно"):
             order_feed_page.close_order_details()
 
+            assert order_feed_page.is_order_modal_closed(), "Модальное окно с деталями заказа не закрылось"
+
     @allure.title('Проверка отображения заказов из истории в ленте заказов')
     def test_orders_from_history_displayed_in_feed(self, driver, login, order_feed_page):
         with allure.step("Получить номера заказов из истории заказов"):
@@ -29,14 +33,9 @@ class TestMainPage:
         with allure.step("Перейти на страницу ленты заказов"):
             order_feed_page.go_to_order_feed()
 
-        with allure.step("Получить номера заказов из ленты заказов"):
-            feed_order_numbers = order_feed_page.get_feed_order_numbers()
-
         with allure.step("Проверить, что все заказы из истории отображаются в ленте"):
-            missing_orders = [order_num for order_num in history_orders if order_num not in feed_order_numbers]
-            assert not missing_orders, (
-                f"Не все заказы из истории отображаются в ленте. "
-                f"Отсутствуют: {', '.join(missing_orders)}"
+            assert order_feed_page.are_orders_displayed_in_feed(history_orders), (
+                "Не все заказы из истории отображаются в ленте"
             )
 
     @allure.title('Проверка увеличения счетчика "Выполнено за всё время"')
@@ -49,38 +48,33 @@ class TestMainPage:
             initial_total = order_feed_page.get_total_orders_count()
 
         with allure.step("Создать новый заказ"):
-            main_page.go_to_constructor()
             main_page.add_ingredient_into_basket()
             main_page.place_order()
             main_page.close_popup()
 
         with allure.step("Дождаться обновления счетчика"):
-            order_feed_page.go_to_order_feed()
             order_feed_page.check_order_counter_increased(initial_total)
             updated_total = order_feed_page.get_total_orders_count()
 
         with allure.step("Проверить увеличение счетчика"):
-            assert updated_total > initial_total, f"Счетчик не изменился: {initial_total} → {updated_total}"
+            assert updated_total > initial_total, f"Счетчик не увеличился: {initial_total} → {updated_total}"
 
 
     @allure.title('Проверка увеличения счетчика "Выполнено за сегодня" при создании нового заказа')
-    @allure.story('При создании нового заказа счетчик "Выполнено за сегодня" увеличивается')
-    def test_today_orders_counter_increases(self, driver, login, order_feed_page):
+    def test_today_orders_counter_increases(self, driver, login):
         main_page = MainPage(driver)
-        order_feed_page.go_to_order_feed()
+        order_feed_page = OrderFeedPage(driver)
 
         with allure.step("Получить начальное значение счетчика"):
             order_feed_page.go_to_order_feed()
             initial_today = order_feed_page.get_today_orders_count()
 
         with allure.step("Создать новый заказ"):
-            main_page.go_to_constructor()
             main_page.add_ingredient_into_basket()
             main_page.place_order()
             main_page.close_popup()
 
         with allure.step("Дождаться обновления счетчика"):
-            order_feed_page.go_to_order_feed()
             order_feed_page.check_order_today_counter_increased(initial_today)
             updated_today = order_feed_page.get_today_orders_count()
 
@@ -89,8 +83,7 @@ class TestMainPage:
 
 
     @allure.title("Заказ появляется в разделе 'В работе' после оформления")
-    @allure.story("При успешном оформлении заказа его номер отображается в разделе 'В работе'")
-    def test_order_appears_in_progress_section(self, driver, login):
+    def test_order_appears_in_progress_section(self, driver, login, order_feed_page):
         main_page = MainPage(driver)
         order_feed_page = OrderFeedPage(driver)
 
@@ -106,12 +99,12 @@ class TestMainPage:
             order_feed_page.go_to_order_feed()
 
         with allure.step("Проверить появление заказа в разделе 'В работе'"):
-            order_feed_page.get_in_progress_orders()
+            order_feed_page.get_in_progress_order()
 
-            in_progress_orders = order_feed_page.get_in_progress_orders()
+            in_progress_order = order_feed_page.get_in_progress_order()
 
-            assert order_number in in_progress_orders, (
+            assert order_number in in_progress_order, (
                 f"Заказ {order_number} не найден в разделе 'В работе'. "
-                f"Текущие заказы: {in_progress_orders}"
+                f"Текущие заказы: {in_progress_order}"
             )
 

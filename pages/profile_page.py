@@ -21,13 +21,15 @@ class ProfilePage(BasePage):
 
     @allure.step("Выход из аккаунта")
     def logout(self):
+        self.wait_for_element(ProfilePageLocators.LOGOUT_BUTTON)
+        self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
+        self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
         self.click_on_element(ProfilePageLocators.LOGOUT_BUTTON)
 
     @allure.step("Проверить переход в конструктор")
     def go_to_constructor(self):
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
-        time.sleep(5)
         self.click_on_element(ProfilePageLocators.CONSTRUCTOR_BUTTON)
         self.wait_for_url_contains(Urls.HOME_PAGE)
 
@@ -35,7 +37,6 @@ class ProfilePage(BasePage):
     def go_to_order_feed(self):
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
-        time.sleep(5)
         self.click_on_element(ProfilePageLocators.ORDER_FEED_BUTTON)
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
@@ -52,11 +53,11 @@ class ProfilePage(BasePage):
         self.wait_for_element(MainPageLocators.PERSONAL_ACCOUNT_BUTTON)
         self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
-        time.sleep(5)
         self.click_on_element(MainPageLocators.PERSONAL_ACCOUNT_BUTTON)
+        self.wait_for_element(MainPageLocators.MODAL_OVERLAY)
+        self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
         self.wait_for_url_contains(Urls.PROFILE_PAGE)
         self.wait_for_element(ProfilePageLocators.ORDER_HISTORY_LINK)
-        return self
 
     @allure.step("Проверка отображения раздела 'История заказов'")
     def is_order_history_section_visible(self):

@@ -11,7 +11,7 @@ class OrderFeedPageLocators:
     TODAY_ORDERS_COUNT = (By.CSS_SELECTOR, "div:nth-child(3) > p.OrderFeed_number__2MbrQ")
 
     # Раздел "В работе"
-    IN_PROGRESS_ORDERS = (By.XPATH, "//ul[contains(@class, 'OrderFeed_orderListReady__1YFem')]//li[contains(@class, 'text_type_digits-default')]")
+    IN_PROGRESS_ORDER = (By.XPATH, "(//li[contains(@class, 'text_type_digits-default')])[6]")
 
 
     # Элементы заказа (для использования внутри заказа)

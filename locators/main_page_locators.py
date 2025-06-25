@@ -17,7 +17,7 @@ class MainPageLocators:
     ORDER_LIST_CONTAINER = (By.CLASS_NAME, "OrderFeed_list__OLh59")
     PERSONAL_ACCOUNT_BUTTON = (By.XPATH, '//p[text()="Личный Кабинет"]')  # - Кнопка "Личный кабинет"
     CONSTRUCTOR_BASKET = (By.XPATH, ".//ul[contains(@class, 'BurgerConstructor_basket')]")
-    ORDER_NUMBER = (By.CSS_SELECTOR, "h2.Modal_modal__title__2L34m")
+    ORDER_NUMBER = (By.CSS_SELECTOR, "h2.Modal_modal__title_shadow__3ikwq.Modal_modal__title__2L34m")
     MODAL_CLOSE_BUTTON = (By.CSS_SELECTOR, "button svg[fill='#F2F2F3']")
     INGREDIENT_ITEM_FIRST = (By.XPATH, "//img[@alt='Флюоресцентная булка R2-D3']")
     INGREDIENTS_LIST = (By.XPATH, "//div[contains(@class, 'BurgerIngredients_ingredients__menuContainer')]") # Список ингредиентов
