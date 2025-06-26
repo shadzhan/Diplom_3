@@ -62,3 +62,8 @@ class ProfilePage(BasePage):
     @allure.step("Проверка отображения раздела 'История заказов'")
     def is_order_history_section_visible(self):
         return self.wait_for_element(ProfilePageLocators.ORDER_LIST_CONTAINER)
+
+
+    @allure.step("Проверить наличие текста на странице")
+    def is_current_url_contains(self, text):
+        return text in self.get_current_url()

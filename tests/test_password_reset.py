@@ -28,8 +28,8 @@ class TestPasswordRecovery:
             recovery_page = ForgotPasswordPage(driver)
             recovery_page.should_be_forgot_password_page()
 
-            assert "forgot-password" in driver.current_url.lower(), \
-                f"Ожидался переход на страницу восстановления пароля. Текущий URL: {driver.current_url}"
+            assert recovery_page.is_current_url_contains("forgot-password"), \
+                f"Ожидался переход на страницу восстановления пароля. Текущий URL: {recovery_page.get_current_url()}"
 
     @allure.title("Восстановление пароля по email")
     def test_password_reset_with_email(self, driver):
@@ -52,8 +52,8 @@ class TestPasswordRecovery:
             password_reset_page = PasswordResetPage(driver)
             password_reset_page.should_be_password_reset_page()
 
-            assert "reset-password" in driver.current_url.lower(), \
-                f"Ожидался переход на страницу сброса пароля. Текущий URL: {driver.current_url}"
+            assert password_reset_page.is_current_url_contains("reset-password"), \
+                f"Ожидался переход на страницу сброса пароля. Текущий URL: {password_reset_page.get_current_url()}"
 
     @allure.title("Проверка функционала показа/скрытия пароля")
     def test_password_visibility_toggle(self, driver):

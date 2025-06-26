@@ -19,3 +19,6 @@ class ForgotPasswordPage(BasePage):
     def click_recover_button(self):
         self.click_on_element(ForgotPasswordLocators.RECOVER_BUTTON)
 
+    @allure.step("Проверить наличие текста на странице")
+    def is_current_url_contains(self, text):
+        return text in self.get_current_url()

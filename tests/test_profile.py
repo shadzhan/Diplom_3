@@ -37,15 +37,19 @@ class TestPersonalAccount:
         login_page = LoginPage(driver)
         login_page.should_be_login_url()
 
-        assert "login" in driver.current_url.lower(), "URL не соответствует странице входа"
+        assert login_page.is_current_url_contains("login"), \
+            "URL не соответствует странице входа"
 
     @allure.title("Переход в конструктор из личного кабинета")
     def test_go_to_constructor_from_profile(self, driver, login):
         profile_page = ProfilePage(driver)
+
         profile_page.go_to_profile()
         profile_page.go_to_constructor()
 
-        assert Urls.HOME_PAGE in driver.current_url, "Не произошел переход на главную страницу"
+        current_url = profile_page.get_current_url()
+        assert Urls.HOME_PAGE in current_url, \
+            f"Не произошел переход на главную страницу. Текущий URL: {current_url}"
 
     @allure.title("Переход в ленту заказов из личного кабинета")
     def test_go_to_order_feed_from_profile(self, driver, login):
@@ -53,6 +57,7 @@ class TestPersonalAccount:
         profile_page.go_to_profile()
         profile_page.go_to_order_feed()
 
-        current_url = driver.current_url
+        current_url = profile_page.get_current_url()
         assert Urls.ORDER_LIST_PAGE in current_url, \
             f"Не произошел переход на страницу ленты заказов. Текущий URL: {current_url}"
+

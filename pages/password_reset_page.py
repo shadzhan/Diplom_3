@@ -20,4 +20,6 @@ class PasswordResetPage(BasePage):
         self.wait_for_element_hide(MainPageLocators.MODAL_OVERLAY)
         self.click_on_element(PasswordResetLocators.PASSWORD_INPUT)
 
-
+    @allure.step("Проверить наличие текста на странице")
+    def is_current_url_contains(self, text):
+        return text in self.get_current_url()

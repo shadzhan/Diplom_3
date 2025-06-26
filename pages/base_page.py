@@ -71,6 +71,10 @@ class BasePage:
     def open_url(self, url):
         self.driver.get(url)
 
+    @allure.step("Проверить наличие текста на странице")
+    def get_current_url(self):
+        return self.driver.current_url
+
     @allure.step("Найти все элементы по локатору")
     def find_elements(self, locator, timeout=10):
         return self.driver.find_elements(*locator)

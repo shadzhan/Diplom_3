@@ -47,6 +47,10 @@ class LoginPage(BasePage):
     def should_be_login_url(self):
         self.wait_for_url_contains(f"{Urls.LOGIN_PAGE}")
 
+    @allure.step("Проверить наличие текста на странице")
+    def is_current_url_contains(self, text):
+        return text in self.get_current_url()
+
     @allure.step("Проверить переход на страницу восстановления пароля")
     def should_be_forgot_password_page(self):
         self.wait_for_url_contains(f"{Urls.FORGOT_PASSWORD_PAGE}")
